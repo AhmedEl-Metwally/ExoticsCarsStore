@@ -1,0 +1,21 @@
+﻿using ExoticsCarsStoreServerSide.Domain.Models.ProductModule;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
+
+namespace ExoticsCarsStoreServerSide.Persistence.Data.Context
+{
+    public class ExoticsCarsStoreDbContext(DbContextOptions<ExoticsCarsStoreDbContext> options) : DbContext(options) 
+    {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //  base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyReference).Assembly);
+         
+        }
+        public DbSet<Product> Products{ get; set; }
+        public DbSet<ProductType> ProductTypes{ get; set; }
+        public DbSet<ProductBrand> ProductBrands{ get; set; }
+    }
+}
+
+
