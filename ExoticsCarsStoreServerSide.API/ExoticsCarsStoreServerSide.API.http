@@ -1,0 +1,6 @@
+@ExoticsCarsStoreServerSide.API_HostAddress = http://localhost:5089
+
+GET {{ExoticsCarsStoreServerSide.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

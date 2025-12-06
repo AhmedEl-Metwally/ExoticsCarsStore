@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/ApplicationCoreLayer/">
+    <Project Path="ExoticsCarsStoreServerSide.Domain/ExoticsCarsStoreServerSide.Domain.csproj" Id="374589d9-5872-4966-b60e-3da378e214c3" />
+    <Project Path="ExoticsCarsStoreServerSide.Services/ExoticsCarsStoreServerSide.Services.csproj" Id="70aafac7-dc48-4ec7-aa3d-43802746c662" />
+    <Project Path="ExoticsCarsStoreServerSide.ServicesAbstraction/ExoticsCarsStoreServerSide.ServicesAbstraction.csproj" Id="8453faae-e801-457a-9ba1-48d306657ccb" />
+  </Folder>
+  <Folder Name="/InfrastructureLayer/">
+    <Project Path="ExoticsCarsStoreServerSide.Persistence/ExoticsCarsStoreServerSide.Persistence.csproj" Id="68dd9be2-f02c-4ea0-a6d7-9523fc44db29" />
+    <Project Path="ExoticsCarsStoreServerSide.Presentation/ExoticsCarsStoreServerSide.Presentation.csproj" Id="93dfce96-e371-4a0f-9047-4cf32ac0e125" />
+  </Folder>
+  <Project Path="ExoticsCarsStoreServerSide.API/ExoticsCarsStoreServerSide.API.csproj" />
+  <Project Path="ExoticsCarsStoreServerSide.Shared/ExoticsCarsStoreServerSide.Shared.csproj" Id="41163313-a16c-4c97-ac23-f6a4412462d9" />
+</Solution>
