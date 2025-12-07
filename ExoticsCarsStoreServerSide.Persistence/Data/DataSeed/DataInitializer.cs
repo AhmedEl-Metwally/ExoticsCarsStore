@@ -9,24 +9,24 @@ namespace ExoticsCarsStoreServerSide.Persistence.Data.DataSeed
 {
     public class DataInitializer(ExoticsCarsStoreDbContext _context) : IDataInitializer
     {
-        public void Initialize()
+        public async Task InitializeAsync()
         {
 			try
 			{
-                var HasProducts = _context.Products.Any();
-                var HasBrands = _context.ProductBrands.Any();
-                var HasTypes = _context.ProductTypes.Any();
-                if(HasProducts&& HasBrands&& HasTypes)
+                var HasProducts = await _context.Products.AnyAsync();
+                var HasBrands = await _context.ProductBrands.AnyAsync();
+                var HasTypes = await _context.ProductTypes.AnyAsync();
+                if(HasProducts&&HasBrands&&HasTypes)
                     return;
 
                 if (!HasBrands)
-                    SeedDataFromJson<ProductBrand, int>("brands.json", _context.ProductBrands);
+                   await SeedDataFromJsonAsync<ProductBrand, int>("brands.json", _context.ProductBrands);
                 if (!HasTypes)
-                    SeedDataFromJson<ProductType,int>("types.json", _context.ProductTypes);
-                _context.SaveChanges(); 
+                    await SeedDataFromJsonAsync<ProductType,int>("types.json", _context.ProductTypes);
+                await _context.SaveChangesAsync();
                 if (!HasProducts)
-                    SeedDataFromJson<Product,int>("products.json", _context.Products);
-                _context.SaveChanges(); 
+                    await SeedDataFromJsonAsync<Product,int>("products.json", _context.Products);
+                await _context.SaveChangesAsync();
             }
 			catch (Exception ex)
 			{
@@ -36,7 +36,7 @@ namespace ExoticsCarsStoreServerSide.Persistence.Data.DataSeed
 
 
         // Helpers Methods
-        private void SeedDataFromJson<T,TKey>(string FileName,DbSet<T> values) where T : BaseEntity<TKey>
+        private async Task SeedDataFromJsonAsync<T,TKey>(string FileName,DbSet<T> values) where T : BaseEntity<TKey>
         {
             var FilePath = @"..\ExoticsCarsStoreServerSide.Persistence\Data\DataSeed\JSONFiles\" + FileName;
             if (!File.Exists(FilePath))
@@ -45,7 +45,7 @@ namespace ExoticsCarsStoreServerSide.Persistence.Data.DataSeed
             try
             {
                 using var dataStream = File.OpenRead(FilePath);
-                var data = JsonSerializer.Deserialize<List<T>>(dataStream, new JsonSerializerOptions() 
+                var data = await JsonSerializer.DeserializeAsync<List<T>>(dataStream, new JsonSerializerOptions() 
                 {
                     PropertyNameCaseInsensitive = true
                 });

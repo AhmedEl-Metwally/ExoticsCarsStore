@@ -1,25 +1,27 @@
 ﻿using ExoticsCarsStoreServerSide.Domain.Contracts;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ExoticsCarsStoreServerSide.API.Extensions
 {
     public static class SeedDataExtension
     {
-        public static WebApplication MigrateSeedDatabase(this WebApplication app)
+        public static async Task<WebApplication> MigrateSeedDatabaseAsync(this WebApplication app)
         {
-            using var scope = app.Services.CreateScope();
+            await using var scope = app.Services.CreateAsyncScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<ExoticsCarsStoreDbContext>();
-            if (dbContext.Database.GetPendingMigrations().Any())
-                dbContext.Database.Migrate();
+            var PendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();   
+            if (PendingMigrations.Any())
+                await dbContext.Database.MigrateAsync();
             return app;
         }
 
-        public static WebApplication SeedDatabase(this WebApplication app)
+        public static async Task<WebApplication> SeedDatabaseAsync(this WebApplication app)
         {
-            using var scope = app.Services.CreateScope();
+            await using var scope = app.Services.CreateAsyncScope();
             var DataInitializerService = scope.ServiceProvider.GetRequiredService<IDataInitializer>();
-            DataInitializerService.Initialize();
+            await DataInitializerService.InitializeAsync();
             return app; 
         }
 
