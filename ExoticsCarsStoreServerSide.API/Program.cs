@@ -1,4 +1,7 @@
+using ExoticsCarsStoreServerSide.API.Extensions;
+using ExoticsCarsStoreServerSide.Domain.Contracts;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
+using ExoticsCarsStoreServerSide.Persistence.Data.DataSeed;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +18,13 @@ builder.Services.AddDbContext<ExoticsCarsStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
 
+builder.Services.AddScoped<IDataInitializer,DataInitializer>();
+
 var app = builder.Build();
+
+app.MigrateSeedDatabase();
+app.SeedDatabase();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
