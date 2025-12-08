@@ -3,6 +3,9 @@ using ExoticsCarsStoreServerSide.Domain.Contracts;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using ExoticsCarsStoreServerSide.Persistence.Data.DataSeed;
 using ExoticsCarsStoreServerSide.Persistence.Repository;
+using ExoticsCarsStoreServerSide.Services.Mapping;
+using ExoticsCarsStoreServerSide.Services.Services;
+using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +22,12 @@ builder.Services.AddDbContext<ExoticsCarsStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
 
+builder.Services.AddAutoMapper(P => P.AddProfile<ProductProfile>());
+
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<IDataInitializer,DataInitializer>();
+builder.Services.AddScoped<IProductService,ProductService>();
+
 var app = builder.Build();
 
 await app.MigrateSeedDatabaseAsync();
