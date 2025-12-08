@@ -20,16 +20,16 @@ namespace ExoticsCarsStoreServerSide.Services.Services
             return _mapper.Map<IEnumerable<ProductDTO>>(Products);
         }
 
-        public async Task<IEnumerable<BrandDTO>> GetAllBrandsAsync()
-        {
-            var Brands = await _unitOfWork.GetRepository<ProductBrand,int>().GetAllAsync();
-            return _mapper.Map<IEnumerable<BrandDTO>>(Brands);
-        }
-
         public async Task<IEnumerable<TypeDTO>> GetAllTypesAsync()
         {
             var Types = await _unitOfWork.GetRepository<ProductType,int>().GetAllAsync();
             return _mapper.Map<IEnumerable<TypeDTO>>(Types);
+        }
+
+        public async Task<IEnumerable<BrandDTO>> GetAllBrandsAsync()
+        {
+            var Brands = await _unitOfWork.GetRepository<ProductBrand,int>().GetAllAsync();
+            return _mapper.Map<IEnumerable<BrandDTO>>(Brands);
         }
 
     }
