@@ -15,10 +15,10 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
             return Ok(Products);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByIdAsync(int Id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByIdAsync(int id)
         {
-            var Product = await _productService.GetProductByIdAsync(Id);
+            var Product = await _productService.GetProductByIdAsync(id);
             return Ok(Product);
         }
 

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExoticsCarsStoreServerSide.Persistence.Data.Migrations
 {
     [DbContext(typeof(ExoticsCarsStoreDbContext))]
-    [Migration("20251206201901_InitialCreate")]
+    [Migration("20251213142305_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -50,20 +50,14 @@ namespace ExoticsCarsStoreServerSide.Persistence.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductBrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductTypeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductBrandId");
+                    b.HasIndex("BrandId");
 
-                    b.HasIndex("ProductTypeId");
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Products");
                 });
@@ -106,13 +100,13 @@ namespace ExoticsCarsStoreServerSide.Persistence.Data.Migrations
                 {
                     b.HasOne("ExoticsCarsStoreServerSide.Domain.Models.ProductModule.ProductBrand", "ProductBrand")
                         .WithMany()
-                        .HasForeignKey("ProductBrandId")
+                        .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ExoticsCarsStoreServerSide.Domain.Models.ProductModule.ProductType", "ProductType")
                         .WithMany()
-                        .HasForeignKey("ProductTypeId")
+                        .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

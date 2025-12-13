@@ -38,6 +38,7 @@ namespace ExoticsCarsStoreServerSide.Persistence.Data.DataSeed
         // Helpers Methods
         private async Task SeedDataFromJsonAsync<T,TKey>(string FileName,DbSet<T> values) where T : BaseEntity<TKey>
         {
+            //D:\study\Web ITI\my pro\Route\Dot Net\Projects\ExoticsCarsStore\ExoticsCarsStoreServerSide.Persistence\Data\DataSeed\JSONFiles\brands.json
             var FilePath = @"..\ExoticsCarsStoreServerSide.Persistence\Data\DataSeed\JSONFiles\" + FileName;
             if (!File.Exists(FilePath))
                 throw new FileNotFoundException($"File{FileName} Is Not Exists");
