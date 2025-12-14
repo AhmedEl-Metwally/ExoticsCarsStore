@@ -14,10 +14,10 @@ namespace ExoticsCarsStoreServerSide.Services.Services
             return _mapper.Map<IEnumerable<ProductDTO>>(Products);
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetProductByIdAsync(int id)
+        public async Task<ProductDTO> GetProductByIdAsync(int id)
         {
             var Products = await _unitOfWork.GetRepository<Product,int>().GetByIdAsync(id);
-            return _mapper.Map<IEnumerable<ProductDTO>>(Products);
+            return _mapper.Map<ProductDTO>(Products);
         }
 
         public async Task<IEnumerable<TypeDTO>> GetAllTypesAsync()

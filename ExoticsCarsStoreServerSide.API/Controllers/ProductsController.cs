@@ -15,7 +15,7 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
             return Ok(Products);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Id")]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByIdAsync(int id)
         {
             var Product = await _productService.GetProductByIdAsync(id);

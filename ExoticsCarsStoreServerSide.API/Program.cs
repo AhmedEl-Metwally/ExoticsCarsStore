@@ -22,7 +22,14 @@ builder.Services.AddDbContext<ExoticsCarsStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
 
-builder.Services.AddAutoMapper(P => P.AddProfile<ProductProfile>());
+//builder.Services.AddAutoMapper(P => P.AddProfile<ProductProfile>());
+//builder.Services.AddAutoMapper(A =>A.LicenseKey ="",typeof(ProductProfile).Assembly);
+//14 AutoMapper
+builder.Services.AddAutoMapper(Mapping =>
+{
+    Mapping.AddProfile(new ProductProfile());
+});
+builder.Services.AddTransient<ProductPictureUrlResolver>();
 
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<IDataInitializer,DataInitializer>();
@@ -45,7 +52,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllers();
