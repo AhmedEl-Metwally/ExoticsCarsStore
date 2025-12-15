@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using ExoticsCarsStoreServerSide.Domain.Contracts;
 using ExoticsCarsStoreServerSide.Domain.Models.ProductModule;
+using ExoticsCarsStoreServerSide.Domain.Specifications;
+using ExoticsCarsStoreServerSide.Services.Specifications;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using ExoticsCarsStoreServerSide.Shared.DTOS.ProductDTOS;
 
@@ -10,7 +11,8 @@ namespace ExoticsCarsStoreServerSide.Services.Services
     {
         public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
         {
-            var Products = await _unitOfWork.GetRepository<Product,int>().GetAllAsync();
+            var specification = new ProductWithTypeAndBrandSpecification();
+            var Products = await _unitOfWork.GetRepository<Product,int>().GetAllAsync(specification);
             return _mapper.Map<IEnumerable<ProductDTO>>(Products);
         }
 

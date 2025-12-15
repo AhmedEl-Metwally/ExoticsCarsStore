@@ -1,5 +1,5 @@
 using ExoticsCarsStoreServerSide.API.Extensions;
-using ExoticsCarsStoreServerSide.Domain.Contracts;
+using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using ExoticsCarsStoreServerSide.Persistence.Data.DataSeed;
 using ExoticsCarsStoreServerSide.Persistence.Repository;

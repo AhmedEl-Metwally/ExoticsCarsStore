@@ -1,4 +1,4 @@
-﻿using ExoticsCarsStoreServerSide.Domain.Contracts;
+﻿using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;

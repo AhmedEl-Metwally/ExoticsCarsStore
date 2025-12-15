@@ -1,4 +1,4 @@
-﻿using ExoticsCarsStoreServerSide.Domain.Contracts;
+﻿using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Domain.Models;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 

@@ -1,6 +1,6 @@
 ﻿using ExoticsCarsStoreServerSide.Domain.Models;
 
-namespace ExoticsCarsStoreServerSide.Domain.Contracts
+namespace ExoticsCarsStoreServerSide.Domain.Specifications
 {
     public interface IUnitOfWork
     {

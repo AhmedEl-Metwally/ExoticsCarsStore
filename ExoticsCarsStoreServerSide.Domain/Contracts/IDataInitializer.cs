@@ -1,4 +1,4 @@
-﻿namespace ExoticsCarsStoreServerSide.Domain.Contracts
+﻿namespace ExoticsCarsStoreServerSide.Domain.Specifications
 {
     public interface IDataInitializer
     {
