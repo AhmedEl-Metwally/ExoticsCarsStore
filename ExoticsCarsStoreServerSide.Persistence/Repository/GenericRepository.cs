@@ -20,6 +20,10 @@ namespace ExoticsCarsStoreServerSide.Persistence.Repository
             => await SpecificationEvaluator.CreateQuery(_context.Set<TEntity>(),specifications).ToListAsync();
   
         public async Task<TEntity?> GetByIdAsync(TKey id) => await _context.Set<TEntity>().FindAsync(id);
+
+        public async Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, TKey> specifications)
+            => await SpecificationEvaluator.CreateQuery(_context.Set<TEntity>(),specifications).FirstOrDefaultAsync();
+
         public void Remove(TEntity entity) => _context.Set<TEntity>().Remove(entity);
         public void Update(TEntity entity) => _context.Set<TEntity>().Update(entity);     
     }

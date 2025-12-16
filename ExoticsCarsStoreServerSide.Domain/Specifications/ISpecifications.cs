@@ -6,5 +6,6 @@ namespace ExoticsCarsStoreServerSide.Domain.Specifications
     public interface ISpecifications<TEntity,TKey> where TEntity : BaseEntity<TKey>
     {
         public ICollection<Expression<Func<TEntity,object>>> IncludeExpressions{ get; }
+        public Expression<Func<TEntity,bool>> Criteria{ get;}
     }
 }

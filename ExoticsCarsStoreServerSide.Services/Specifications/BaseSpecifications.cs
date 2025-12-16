@@ -9,5 +9,9 @@ namespace ExoticsCarsStoreServerSide.Services.Specifications
         public ICollection<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
 
         protected void AddInclude(Expression<Func<TEntity, object>> includeExpression) => IncludeExpressions.Add(includeExpression);
+
+        public Expression<Func<TEntity, bool>> Criteria { get; }
+        protected BaseSpecifications(Expression<Func<TEntity, bool>> CriteriaExpressions) => Criteria = CriteriaExpressions;
+     
     }
 }

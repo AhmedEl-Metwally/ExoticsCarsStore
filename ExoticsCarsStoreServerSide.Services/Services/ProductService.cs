@@ -18,7 +18,8 @@ namespace ExoticsCarsStoreServerSide.Services.Services
 
         public async Task<ProductDTO> GetProductByIdAsync(int id)
         {
-            var Products = await _unitOfWork.GetRepository<Product,int>().GetByIdAsync(id);
+            var specification = new ProductWithTypeAndBrandSpecification(id);
+            var Products = await _unitOfWork.GetRepository<Product,int>().GetByIdAsync(specification);
             return _mapper.Map<ProductDTO>(Products);
         }
 

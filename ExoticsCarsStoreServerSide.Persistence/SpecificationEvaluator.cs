@@ -11,6 +11,9 @@ namespace ExoticsCarsStoreServerSide.Persistence
             var Query = EntryPoint;
             if (specifications is not null)
             {
+                if (specifications.Criteria is not null)
+                    Query = Query.Where(specifications.Criteria);
+
                 if (specifications.IncludeExpressions is not null && specifications.IncludeExpressions.Any())
                     Query = specifications.IncludeExpressions.Aggregate(Query,(CurrentQuery,IncludeExpression) => CurrentQuery.Include(IncludeExpression));
             }
