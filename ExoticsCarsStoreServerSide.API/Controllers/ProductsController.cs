@@ -9,9 +9,9 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
     public class ProductsController(IProductService _productService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProductsAsync()
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProductsAsync(int? brandId, int? typeId)
         {
-            var Products = await _productService.GetAllProductsAsync();
+            var Products = await _productService.GetAllProductsAsync(brandId,typeId);
             return Ok(Products);
         }
 
