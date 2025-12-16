@@ -3,15 +3,16 @@ using ExoticsCarsStoreServerSide.Domain.Models.ProductModule;
 using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Services.Specifications.ProductWithSpecifications;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
+using ExoticsCarsStoreServerSide.Shared;
 using ExoticsCarsStoreServerSide.Shared.DTOS.ProductDTOS;
 
 namespace ExoticsCarsStoreServerSide.Services.Services
 {
     public class ProductService(IUnitOfWork _unitOfWork,IMapper _mapper) : IProductService
     {
-        public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync(int? brandId, int? typeId)
+        public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync(ProductQueryParams queryParams)
         {
-            var specification = new ProductWithTypeAndBrandSpecification(brandId, typeId);
+            var specification = new ProductWithTypeAndBrandSpecification(queryParams);
             var Products = await _unitOfWork.GetRepository<Product,int>().GetAllAsync(specification);
             return _mapper.Map<IEnumerable<ProductDTO>>(Products);
         }

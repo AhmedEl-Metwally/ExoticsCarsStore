@@ -1,4 +1,5 @@
 ﻿using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
+using ExoticsCarsStoreServerSide.Shared;
 using ExoticsCarsStoreServerSide.Shared.DTOS.ProductDTOS;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +10,9 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
     public class ProductsController(IProductService _productService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProductsAsync(int? brandId, int? typeId)
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProductsAsync([FromQuery]ProductQueryParams queryParams)
         {
-            var Products = await _productService.GetAllProductsAsync(brandId,typeId);
+            var Products = await _productService.GetAllProductsAsync(queryParams);
             return Ok(Products);
         }
 
