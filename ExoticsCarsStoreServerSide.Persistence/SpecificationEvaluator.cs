@@ -16,6 +16,12 @@ namespace ExoticsCarsStoreServerSide.Persistence
 
                 if (specifications.IncludeExpressions is not null && specifications.IncludeExpressions.Any())
                     Query = specifications.IncludeExpressions.Aggregate(Query,(CurrentQuery,IncludeExpression) => CurrentQuery.Include(IncludeExpression));
+
+                if (specifications.OrderBy is not null)
+                    Query = Query.OrderBy(specifications.OrderBy);
+
+                if(specifications.OrderByDescending is not null)
+                    Query = Query.OrderByDescending(specifications.OrderByDescending);
             }
             return Query;
         }
