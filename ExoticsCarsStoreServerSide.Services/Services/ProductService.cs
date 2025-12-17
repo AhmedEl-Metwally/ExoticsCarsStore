@@ -12,12 +12,13 @@ namespace ExoticsCarsStoreServerSide.Services.Services
     {
         public async Task<PaginatedResult<ProductDTO>> GetAllProductsAsync(ProductQueryParams queryParams)
         {
+            var RepositoryOfProducts =  _unitOfWork.GetRepository<Product, int>();
             var specification = new ProductWithTypeAndBrandSpecification(queryParams);
-            var Products = await _unitOfWork.GetRepository<Product,int>().GetAllAsync(specification);
+            var Products = await RepositoryOfProducts.GetAllAsync(specification);
             var DataToReturn = _mapper.Map<IEnumerable<ProductDTO>>(Products);
             var CountOfReturnedData = DataToReturn.Count();
             var ProductCountSpecifications = new ProductCountSpecifications(queryParams);
-            var CountOfAllProduct = await _unitOfWork.GetRepository<Product, int>().CountAsync(ProductCountSpecifications);
+            var CountOfAllProduct = await RepositoryOfProducts.CountAsync(ProductCountSpecifications);
             return new PaginatedResult<ProductDTO>(queryParams.pageIndex, CountOfReturnedData, CountOfAllProduct, DataToReturn);
         }
 

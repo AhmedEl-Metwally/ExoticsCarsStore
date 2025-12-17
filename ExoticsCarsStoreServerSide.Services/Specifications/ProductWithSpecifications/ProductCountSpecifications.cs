@@ -5,10 +5,7 @@ namespace ExoticsCarsStoreServerSide.Services.Specifications.ProductWithSpecific
 {
     public class ProductCountSpecifications : BaseSpecifications<Product,int>
     {
-        public ProductCountSpecifications(ProductQueryParams queryParams) : base(
-          P => (!queryParams.brandId.HasValue || P.BrandId == queryParams.brandId.Value)
-                          && (!queryParams.typeId.HasValue || P.TypeId == queryParams.typeId.Value)
-                          && (string.IsNullOrEmpty(queryParams.search) || P.Name.ToLower().Contains(queryParams.search.ToLower())))
+        public ProductCountSpecifications(ProductQueryParams queryParams) : base(ProductSpecificationsHelper.GetProductCriteria(queryParams))
         {
         }
     }
