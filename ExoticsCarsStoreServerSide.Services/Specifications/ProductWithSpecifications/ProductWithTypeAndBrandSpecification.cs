@@ -32,7 +32,7 @@ namespace ExoticsCarsStoreServerSide.Services.Specifications.ProductWithSpecific
                 default:
                     break;
             }
-           // ApplyPagination(queryParams.PageSize, queryParams.pageNumber);
+            ApplyPagination(queryParams.pageSize, queryParams.pageIndex);
         }
 
         // GetProductById
