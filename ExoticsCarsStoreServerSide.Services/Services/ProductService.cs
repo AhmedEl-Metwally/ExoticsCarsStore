@@ -10,11 +10,15 @@ namespace ExoticsCarsStoreServerSide.Services.Services
 {
     public class ProductService(IUnitOfWork _unitOfWork,IMapper _mapper) : IProductService
     {
-        public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync(ProductQueryParams queryParams)
+        public async Task<PaginatedResult<ProductDTO>> GetAllProductsAsync(ProductQueryParams queryParams)
         {
             var specification = new ProductWithTypeAndBrandSpecification(queryParams);
             var Products = await _unitOfWork.GetRepository<Product,int>().GetAllAsync(specification);
-            return _mapper.Map<IEnumerable<ProductDTO>>(Products);
+            var DataToReturn = _mapper.Map<IEnumerable<ProductDTO>>(Products);
+            var CountOfReturnedData = DataToReturn.Count();
+            var ProductCountSpecifications = new ProductCountSpecifications(queryParams);
+            var CountOfAllProduct = await _unitOfWork.GetRepository<Product, int>().CountAsync(ProductCountSpecifications);
+            return new PaginatedResult<ProductDTO>(queryParams.pageIndex, CountOfReturnedData, CountOfAllProduct, DataToReturn);
         }
 
         public async Task<ProductDTO> GetProductByIdAsync(int id)

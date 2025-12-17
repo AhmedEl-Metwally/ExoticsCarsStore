@@ -14,6 +14,7 @@ namespace ExoticsCarsStoreServerSide.Persistence.Repository
             _context = context;
         }
         public async Task AddAsync(TEntity entity) => await _context.Set<TEntity>().AddAsync(entity);
+
         public async Task<IEnumerable<TEntity>> GetAllAsync() => await _context.Set<TEntity>().ToListAsync();
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, TKey> specifications)
@@ -25,6 +26,11 @@ namespace ExoticsCarsStoreServerSide.Persistence.Repository
             => await SpecificationEvaluator.CreateQuery(_context.Set<TEntity>(),specifications).FirstOrDefaultAsync();
 
         public void Remove(TEntity entity) => _context.Set<TEntity>().Remove(entity);
-        public void Update(TEntity entity) => _context.Set<TEntity>().Update(entity);     
+
+        public void Update(TEntity entity) => _context.Set<TEntity>().Update(entity);
+
+        public async Task<int> CountAsync(ISpecifications<TEntity, TKey> specifications)
+            => await SpecificationEvaluator.CreateQuery(_context.Set<TEntity>(),specifications).CountAsync();
+      
     }
 }

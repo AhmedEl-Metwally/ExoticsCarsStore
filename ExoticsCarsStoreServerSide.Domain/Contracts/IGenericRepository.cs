@@ -11,5 +11,6 @@ namespace ExoticsCarsStoreServerSide.Domain.Specifications
         Task AddAsync(TEntity entity);
         void Update(TEntity entity);
         void Remove(TEntity entity);
+        Task<int> CountAsync(ISpecifications<TEntity, TKey> specifications);
     }
 }

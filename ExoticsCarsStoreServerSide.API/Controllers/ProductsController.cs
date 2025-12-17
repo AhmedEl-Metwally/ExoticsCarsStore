@@ -10,7 +10,7 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
     public class ProductsController(IProductService _productService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProductsAsync([FromQuery]ProductQueryParams queryParams)
+        public async Task<ActionResult<PaginatedResult<ProductDTO>>> GetAllProductsAsync([FromQuery]ProductQueryParams queryParams)
         {
             var Products = await _productService.GetAllProductsAsync(queryParams);
             return Ok(Products);
