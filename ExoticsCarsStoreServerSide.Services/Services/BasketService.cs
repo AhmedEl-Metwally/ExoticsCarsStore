@@ -10,9 +10,9 @@ namespace ExoticsCarsStoreServerSide.Services.Services
     {
         public async Task<BasketDTO> CreateOrUpdateBasketAsync(BasketDTO basket)
         {
-            var CustomerBaskets = _mapper.Map<CustomerBasket>(basket);
+            var CustomerBaskets = _mapper.Map<BasketDTO,CustomerBasket>(basket);
             var CreateOrUpdateBasket = await _basketRepository.CreateOrUpdateBasketAsync(CustomerBaskets);
-            return _mapper.Map<BasketDTO>(CreateOrUpdateBasket!);
+            return _mapper.Map<CustomerBasket,BasketDTO>(CreateOrUpdateBasket!);
         }
 
         public async Task<bool> DeleteBasketAsync(string id) => await _basketRepository.DeleteBasketAsync(id);

@@ -3,14 +3,19 @@
 namespace ExoticsCarsStoreServerSide.Shared.DTOS.BasketDTOS
 {
     public record BasketItemDTO
-        (
-            int Id,
-            string ProductName,
-            string PictureUrl,
-            [Range(1,double.MaxValue)]
-            decimal Price,
-            [Range(1,100)]
-            int Quantity
-        );
-  
+    {
+        public int Id { get; init; }
+        public string ProductName { get; init; } = string.Empty;
+        public string PictureUrl { get; init; } = string.Empty;
+        [Range(1, double.MaxValue)]
+        public decimal Price { get; init; }
+        [Range(1, 100)]
+        public int Quantity { get; init; }
+    }
+
+
 }
+
+
+
+       
