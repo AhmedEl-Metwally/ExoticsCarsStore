@@ -7,6 +7,7 @@ using ExoticsCarsStoreServerSide.Services.Mapping;
 using ExoticsCarsStoreServerSide.Services.Services;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ExoticsCarsStoreDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+});
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(SP => 
+{
+    return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")!);
 });
 
 //builder.Services.AddAutoMapper(P => P.AddProfile<ProductProfile>());
