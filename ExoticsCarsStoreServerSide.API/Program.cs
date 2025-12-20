@@ -1,4 +1,5 @@
 using ExoticsCarsStoreServerSide.API.Extensions;
+using ExoticsCarsStoreServerSide.Domain.Contracts;
 using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using ExoticsCarsStoreServerSide.Persistence.Data.DataSeed;
@@ -34,12 +35,15 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(SP =>
 builder.Services.AddAutoMapper(Mapping =>
 {
     Mapping.AddProfile(new ProductProfile());
+    Mapping.AddProfile(new BasketProfile());
 });
 builder.Services.AddTransient<ProductPictureUrlResolver>();
 
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<IDataInitializer,DataInitializer>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
 
 var app = builder.Build();
 
