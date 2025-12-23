@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ExoticsCarsStoreServerSide.Domain.Exceptions.NotFoundExceptions;
 using ExoticsCarsStoreServerSide.Domain.Models.ProductModule;
 using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Services.Specifications.ProductWithSpecifications;
@@ -26,6 +27,8 @@ namespace ExoticsCarsStoreServerSide.Services.Services
         {
             var specification = new ProductWithTypeAndBrandSpecification(id);
             var Products = await _unitOfWork.GetRepository<Product,int>().GetByIdAsync(specification);
+            if (Products is null)
+                throw new ProductNotFoundException(id);
             return _mapper.Map<ProductDTO>(Products);
         }
 

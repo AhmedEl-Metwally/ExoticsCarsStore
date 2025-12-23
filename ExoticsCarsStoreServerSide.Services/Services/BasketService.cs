@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ExoticsCarsStoreServerSide.Domain.Contracts;
+using ExoticsCarsStoreServerSide.Domain.Exceptions.NotFoundExceptions;
 using ExoticsCarsStoreServerSide.Domain.Models.BasketModule;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using ExoticsCarsStoreServerSide.Shared.DTOS.BasketDTOS;
@@ -20,7 +21,9 @@ namespace ExoticsCarsStoreServerSide.Services.Services
         public async Task<BasketDTO> GetBasketAsync(string id)
         {
             var Basket = await _basketRepository.GetBasketAsync(id);
-            return _mapper.Map<CustomerBasket,BasketDTO>(Basket!);
+            if (Basket is null)
+                throw new BasketNotFoundException(id);
+            return _mapper.Map<CustomerBasket,BasketDTO>(Basket);
         }
     }
 }
