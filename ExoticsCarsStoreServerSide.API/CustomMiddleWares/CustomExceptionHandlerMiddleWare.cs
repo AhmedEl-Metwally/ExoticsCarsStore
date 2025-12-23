@@ -18,20 +18,32 @@ namespace ExoticsCarsStoreServerSide.API.CustomMiddleWares
             try
             {
                 await _next.Invoke(httpContext);
+
+                if(httpContext.Response.StatusCode == StatusCodes.Status404NotFound)
+                {
+                    var problemDetailsNotFound = new ProblemDetails
+                    {
+                        Title = "Resource not found",
+                        Status = StatusCodes.Status404NotFound,
+                        Detail = "The requested resource was not found",
+                        Instance = httpContext.Request.Path
+                    };
+                    await httpContext.Response.WriteAsJsonAsync(problemDetailsNotFound);
+                }
             }
             catch (Exception Ex)
             {
                 _logger.LogError(Ex, "Something Went Wrong");
 
                 httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                var problemDetails = new ProblemDetails 
+                var problemDetailsInternalServerError = new ProblemDetails 
                 {
                     Status = StatusCodes.Status500InternalServerError,
                     Title = "An unexpected error occurred!",
                     Detail = Ex.Message,
                     Instance = httpContext.Request.Path
                 };
-                await httpContext.Response.WriteAsJsonAsync(problemDetails);
+                await httpContext.Response.WriteAsJsonAsync(problemDetailsInternalServerError);
             }
         }
     }
