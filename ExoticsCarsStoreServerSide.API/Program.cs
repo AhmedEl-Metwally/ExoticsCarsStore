@@ -41,9 +41,11 @@ builder.Services.AddTransient<ProductPictureUrlResolver>();
 
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<IDataInitializer,DataInitializer>();
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IBasketRepository,BasketRepository>();
+builder.Services.AddScoped<ICacheRepository,CacheRepository>();
 builder.Services.AddScoped<IProductService,ProductService>();
-builder.Services.AddScoped<IBasketService, BasketService>();
+builder.Services.AddScoped<IBasketService,BasketService>();
+builder.Services.AddScoped<ICacheService,CacheService>();
 
 var app = builder.Build();
 

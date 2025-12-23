@@ -3,6 +3,6 @@
     public class CustomerBasket
     {
         public string Id { get; set; } = default!;
-        public ICollection<BasketItem> BasketItems { get; set; } = new List<BasketItem>();
+        public ICollection<BasketItem> Items { get; set; } = new List<BasketItem>();
     }
 }

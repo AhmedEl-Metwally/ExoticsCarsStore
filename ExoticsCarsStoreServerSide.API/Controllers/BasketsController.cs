@@ -9,7 +9,7 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
     public class BasketsController(IBasketService _basketService) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<BasketDTO>> GetResultAsync(string id)
+        public async Task<ActionResult<BasketDTO>> GetBasketAsync(string id)
         {
             var Basket = await _basketService.GetBasketAsync(id);
             return Ok(Basket);
