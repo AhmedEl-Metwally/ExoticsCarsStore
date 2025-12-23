@@ -1,3 +1,4 @@
+using ExoticsCarsStoreServerSide.API.CustomMiddleWares;
 using ExoticsCarsStoreServerSide.API.Extensions;
 using ExoticsCarsStoreServerSide.Domain.Contracts;
 using ExoticsCarsStoreServerSide.Domain.Specifications;
@@ -54,6 +55,27 @@ await app.SeedDatabaseAsync();
 
 
 // Configure the HTTP request pipeline.
+
+//app.Use(async(Context,Next) => 
+//{
+//    try
+//    {
+//        await Next.Invoke(Context);
+//    }
+//    catch (Exception Ex)
+//    {
+//        Console.WriteLine(Ex.Message);
+//        Context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+//        await Context.Response.WriteAsJsonAsync(new 
+//        {
+//            StatusCode = StatusCodes.Status500InternalServerError,
+//            Error = $"An unexpected error occurred: {Ex.Message}"
+//        });
+//    }
+//});
+
+app.UseMiddleware<CustomExceptionHandlerMiddleWare>();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
