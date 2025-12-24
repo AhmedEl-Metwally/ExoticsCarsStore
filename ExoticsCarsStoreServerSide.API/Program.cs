@@ -1,5 +1,6 @@
 using ExoticsCarsStoreServerSide.API.CustomMiddleWares;
 using ExoticsCarsStoreServerSide.API.Extensions;
+using ExoticsCarsStoreServerSide.API.Factories;
 using ExoticsCarsStoreServerSide.Domain.Contracts;
 using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
@@ -8,6 +9,7 @@ using ExoticsCarsStoreServerSide.Persistence.Repository;
 using ExoticsCarsStoreServerSide.Services.Mapping;
 using ExoticsCarsStoreServerSide.Services.Services;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 
@@ -25,9 +27,14 @@ builder.Services.AddDbContext<ExoticsCarsStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
 
-builder.Services.AddSingleton<IConnectionMultiplexer>(SP => 
+builder.Services.AddSingleton<IConnectionMultiplexer>(SP =>
 {
     return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")!);
+});
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateAPiValidationResponse;
 });
 
 //builder.Services.AddAutoMapper(P => P.AddProfile<ProductProfile>());
@@ -40,13 +47,13 @@ builder.Services.AddAutoMapper(Mapping =>
 });
 builder.Services.AddTransient<ProductPictureUrlResolver>();
 
-builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
-builder.Services.AddScoped<IDataInitializer,DataInitializer>();
-builder.Services.AddScoped<IBasketRepository,BasketRepository>();
-builder.Services.AddScoped<ICacheRepository,CacheRepository>();
-builder.Services.AddScoped<IProductService,ProductService>();
-builder.Services.AddScoped<IBasketService,BasketService>();
-builder.Services.AddScoped<ICacheService,CacheService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IDataInitializer, DataInitializer>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<ICacheRepository, CacheRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
+builder.Services.AddScoped<ICacheService, CacheService>();
 
 var app = builder.Build();
 
@@ -79,7 +86,7 @@ app.UseMiddleware<CustomExceptionHandlerMiddleWare>();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUI(option => 
+    app.UseSwaggerUI(option =>
     {
         option.SwaggerEndpoint("/openapi/v1.json", "API v1");
     });
