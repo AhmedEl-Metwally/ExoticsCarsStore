@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExoticsCarsStoreServerSide.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController(IProductService _productService) : ControllerBase
+
+    public class ProductsController(IProductService _productService) : ApiBaseController
     {
         [HttpGet]
         [Cache]
@@ -19,10 +18,10 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
         }
 
         [HttpGet("Id")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByIdAsync(int id)
+        public async Task<ActionResult<ProductDTO>> GetProductByIdAsync(int id)
         {
             var ResultOfProducts = await _productService.GetProductByIdAsync(id);
-            return Ok(ResultOfProducts);
+            return HandleResult<ProductDTO>(ResultOfProducts);
         }
 
         [HttpGet("Types")]

@@ -8,7 +8,7 @@ namespace ExoticsCarsStoreServerSide.API.CustomMiddleWares
         private readonly RequestDelegate _next;
         private readonly ILogger<CustomExceptionHandlerMiddleWare> _logger;
 
-        public CustomExceptionHandlerMiddleWare(RequestDelegate Next,ILogger<CustomExceptionHandlerMiddleWare> Logger)
+        public CustomExceptionHandlerMiddleWare(RequestDelegate Next, ILogger<CustomExceptionHandlerMiddleWare> Logger)
         {
             _next = Next;
             _logger = Logger;
@@ -44,7 +44,7 @@ namespace ExoticsCarsStoreServerSide.API.CustomMiddleWares
 
         private static async Task HandleNotFoundResponseAsync(HttpContext httpContext)
         {
-            if (httpContext.Response.StatusCode == StatusCodes.Status404NotFound)
+            if (httpContext.Response.StatusCode == StatusCodes.Status404NotFound && !httpContext.Response.HasStarted)
             {
                 var problemDetailsNotFound = new ProblemDetails
                 {
