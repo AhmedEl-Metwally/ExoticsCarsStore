@@ -8,7 +8,7 @@
         public IReadOnlyList<ValidationErrorToReturn> Errors => _validationErrorToReturn;
 
         // Ok
-        protected ErrorToReturn(){}
+        protected ErrorToReturn() { }
 
         // Fail With Errors
         protected ErrorToReturn(ValidationErrorToReturn validationErrorToReturn) => _validationErrorToReturn.Add(validationErrorToReturn);

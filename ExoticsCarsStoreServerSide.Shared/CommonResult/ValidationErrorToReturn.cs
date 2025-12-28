@@ -2,9 +2,9 @@
 {
     public class ValidationErrorToReturn
     {
-        public string StatusCode { get; set; } 
-        public string ErrorDescription { get; set; } 
-        public ErrorType ErrorType  { get; set; } 
+        public string StatusCode { get; set; }
+        public string ErrorDescription { get; set; }
+        public ErrorType ErrorType { get; set; }
 
         private ValidationErrorToReturn(string statusCode, string errorDescription, ErrorType errorType)
         {

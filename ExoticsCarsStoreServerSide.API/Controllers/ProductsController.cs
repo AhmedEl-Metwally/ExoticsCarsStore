@@ -12,7 +12,7 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
     {
         [HttpGet]
         [Cache]
-        public async Task<ActionResult<PaginatedResult<ProductDTO>>> GetAllProductsAsync([FromQuery]ProductQueryParams queryParams)
+        public async Task<ActionResult<PaginatedResult<ProductDTO>>> GetAllProductsAsync([FromQuery] ProductQueryParams queryParams)
         {
             var Products = await _productService.GetAllProductsAsync(queryParams);
             return Ok(Products);
@@ -21,8 +21,8 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
         [HttpGet("Id")]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProductByIdAsync(int id)
         {
-            var Product = await _productService.GetProductByIdAsync(id);
-            return Ok(Product);
+            var ResultOfProducts = await _productService.GetProductByIdAsync(id);
+            return Ok(ResultOfProducts);
         }
 
         [HttpGet("Types")]

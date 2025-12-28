@@ -15,5 +15,9 @@
         public static ErrorToReturnValue<TValue> Ok(TValue value) => new(value);
         public static new ErrorToReturnValue<TValue> Fail(ValidationErrorToReturn validationErrorToReturn) => new(validationErrorToReturn);
         public static new ErrorToReturnValue<TValue> Fail(List<ValidationErrorToReturn> validationErrorToReturns) => new(validationErrorToReturns);
+
+        public static implicit operator ErrorToReturnValue<TValue>(TValue value) => Ok(value);
+        public static implicit operator ErrorToReturnValue<TValue>(ValidationErrorToReturn validationErrorToReturn) => Fail(validationErrorToReturn);
+        public static implicit operator ErrorToReturnValue<TValue>(List<ValidationErrorToReturn> validationErrorToReturns) => Fail(validationErrorToReturns);
     }
 }
