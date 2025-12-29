@@ -7,7 +7,7 @@ namespace ExoticsCarsStoreServerSide.API.Extensions
 {
     public static class SeedDataExtension
     {
-        public static async Task<WebApplication> MigrateSeedDatabaseAsync(this WebApplication app)
+        public static async Task<WebApplication> MigrateDatabaseAsync(this WebApplication app)
         {
             await using var scope = app.Services.CreateAsyncScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<ExoticsCarsStoreDbContext>();
@@ -30,7 +30,15 @@ namespace ExoticsCarsStoreServerSide.API.Extensions
         public static async Task<WebApplication> SeedDatabaseAsync(this WebApplication app)
         {
             await using var scope = app.Services.CreateAsyncScope();
-            var DataInitializerService = scope.ServiceProvider.GetRequiredService<IDataInitializer>();
+            var DataInitializerService = scope.ServiceProvider.GetRequiredKeyedService<IDataInitializer>("Default");
+            await DataInitializerService.InitializeAsync();
+            return app;
+        }
+
+        public static async Task<WebApplication> SeedIdentityDatabaseAsync(this WebApplication app)
+        {
+            await using var scope = app.Services.CreateAsyncScope();
+            var DataInitializerService = scope.ServiceProvider.GetRequiredKeyedService<IDataInitializer>("Identity");
             await DataInitializerService.InitializeAsync();
             return app;
         }

@@ -2,14 +2,17 @@ using ExoticsCarsStoreServerSide.API.CustomMiddleWares;
 using ExoticsCarsStoreServerSide.API.Extensions;
 using ExoticsCarsStoreServerSide.API.Factories;
 using ExoticsCarsStoreServerSide.Domain.Contracts;
+using ExoticsCarsStoreServerSide.Domain.Models.IdentityModule;
 using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using ExoticsCarsStoreServerSide.Persistence.Data.DataSeed;
+using ExoticsCarsStoreServerSide.Persistence.IdentityData.DataSeed;
 using ExoticsCarsStoreServerSide.Persistence.IdentityData.DbContext;
 using ExoticsCarsStoreServerSide.Persistence.Repository;
 using ExoticsCarsStoreServerSide.Services.Mapping;
 using ExoticsCarsStoreServerSide.Services.Services;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
@@ -54,18 +57,21 @@ builder.Services.AddAutoMapper(Mapping =>
 builder.Services.AddTransient<ProductPictureUrlResolver>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IDataInitializer, DataInitializer>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<ICacheRepository, CacheRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddKeyedScoped<IDataInitializer, DataInitializer>("Default");
+builder.Services.AddKeyedScoped<IDataInitializer, IdentityDataInitializer>("Identity");
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExoticsCarsStoreIdentityDbContext>();
 
 var app = builder.Build();
 
-await app.MigrateSeedDatabaseAsync();
+await app.MigrateDatabaseAsync();
 await app.MigrateIdentityDatabaseAsync();
 await app.SeedDatabaseAsync();
+await app.SeedIdentityDatabaseAsync();
 
 
 // Configure the HTTP request pipeline.
