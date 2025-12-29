@@ -5,6 +5,7 @@ using ExoticsCarsStoreServerSide.Domain.Contracts;
 using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using ExoticsCarsStoreServerSide.Persistence.Data.DataSeed;
+using ExoticsCarsStoreServerSide.Persistence.IdentityData.DbContext;
 using ExoticsCarsStoreServerSide.Persistence.Repository;
 using ExoticsCarsStoreServerSide.Services.Mapping;
 using ExoticsCarsStoreServerSide.Services.Services;
@@ -25,6 +26,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ExoticsCarsStoreDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+});
+
+builder.Services.AddDbContext<ExoticsCarsStoreIdentityDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnectionString"));
 });
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(SP =>
@@ -58,6 +64,7 @@ builder.Services.AddScoped<ICacheService, CacheService>();
 var app = builder.Build();
 
 await app.MigrateSeedDatabaseAsync();
+await app.MigrateIdentityDatabaseAsync();
 await app.SeedDatabaseAsync();
 
 
