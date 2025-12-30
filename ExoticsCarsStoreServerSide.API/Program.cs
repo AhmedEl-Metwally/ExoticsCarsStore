@@ -62,6 +62,7 @@ builder.Services.AddScoped<ICacheRepository, CacheRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddKeyedScoped<IDataInitializer, DataInitializer>("Default");
 builder.Services.AddKeyedScoped<IDataInitializer, IdentityDataInitializer>("Identity");
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExoticsCarsStoreIdentityDbContext>();
