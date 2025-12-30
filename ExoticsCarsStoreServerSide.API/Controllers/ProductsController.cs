@@ -2,6 +2,7 @@
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using ExoticsCarsStoreServerSide.Shared;
 using ExoticsCarsStoreServerSide.Shared.DTOS.ProductDTOS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExoticsCarsStoreServerSide.API.Controllers
@@ -11,6 +12,7 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
     {
         [HttpGet]
         [Cache]
+        [Authorize]
         public async Task<ActionResult<PaginatedResult<ProductDTO>>> GetAllProductsAsync([FromQuery] ProductQueryParams queryParams)
         {
             var Products = await _productService.GetAllProductsAsync(queryParams);

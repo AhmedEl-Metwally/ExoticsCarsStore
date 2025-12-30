@@ -12,10 +12,13 @@ using ExoticsCarsStoreServerSide.Persistence.Repository;
 using ExoticsCarsStoreServerSide.Services.Mapping;
 using ExoticsCarsStoreServerSide.Services.Services;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +70,25 @@ builder.Services.AddKeyedScoped<IDataInitializer, DataInitializer>("Default");
 builder.Services.AddKeyedScoped<IDataInitializer, IdentityDataInitializer>("Identity");
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExoticsCarsStoreIdentityDbContext>();
 
+builder.Services.AddAuthentication(Config =>
+{
+    Config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    Config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+  .AddJwtBearer(options =>
+  {
+      options.SaveToken = true;
+      options.TokenValidationParameters = new TokenValidationParameters
+      {
+          ValidateIssuer = true,
+          ValidateAudience = true,
+          ValidateLifetime = true,
+          ValidIssuer =builder.Configuration["JwtOptions:Issuer"],
+          ValidAudience =builder.Configuration["JwtOptions:Audience"],
+          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtOptions:SecretKey"]))
+      };
+  });
+
 var app = builder.Build();
 
 await app.MigrateDatabaseAsync();
@@ -108,6 +130,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
