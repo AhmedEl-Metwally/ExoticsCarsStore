@@ -47,6 +47,21 @@ namespace ExoticsCarsStoreServerSide.Services.Services
             return IdentityResult.Errors.Select(E => ValidationErrorToReturn.ValidationError(E.Code, E.Description)).ToList();
         }
 
+        public async Task<bool> CheckEmailAsync(string email)
+        {
+            var User = await _userManager.FindByEmailAsync(email);
+            return User != null;
+        }
+
+        public async Task<ErrorToReturnValue<UserDTO>> GetUserByEmailAsync(string email)
+        {
+            var User = await _userManager.FindByEmailAsync(email);
+            if (User is null)
+                return ValidationErrorToReturn.NotFound("User.NotFound", $"User with email {email} not found");
+
+            var Token = await CreateTokenAsync(User);
+            return new UserDTO { Email = User.Email!, DisplayName = User.DisplayName, Token = Token };
+        }
 
 
         private async Task<string> CreateTokenAsync(ApplicationUser user)
@@ -69,7 +84,7 @@ namespace ExoticsCarsStoreServerSide.Services.Services
                    issuer: _configuration["JwtOptions:Issuer"],
                    audience: _configuration["JwtOptions:Audience"],
                    claims: Claims,
-                   expires: DateTime.Now.AddHours(1),
+                   expires: DateTime.Now.AddHours(30),
                    signingCredentials: Creds
                  );
 

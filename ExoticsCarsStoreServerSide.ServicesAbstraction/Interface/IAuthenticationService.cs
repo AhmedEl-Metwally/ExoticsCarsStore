@@ -7,5 +7,8 @@ namespace ExoticsCarsStoreServerSide.ServicesAbstraction.Interface
     {
         Task<ErrorToReturnValue<UserDTO>> LoginAsync(LoginDTO loginDTO);
         Task<ErrorToReturnValue<UserDTO>> RegisterAsync(RegisterDTO registerDTO);
+        Task<bool> CheckEmailAsync(string email);
+        Task<ErrorToReturnValue<UserDTO>> GetUserByEmailAsync(string email);
+
     }
 }
