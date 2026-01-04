@@ -9,7 +9,7 @@ namespace ExoticsCarsStoreServerSide.Persistence.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //  base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyReference).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ExoticsCarsStoreDbContext).Assembly);
          
         }
         public DbSet<Product> Products{ get; set; }
