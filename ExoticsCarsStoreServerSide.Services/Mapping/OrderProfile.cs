@@ -10,6 +10,8 @@ namespace ExoticsCarsStoreServerSide.Services.Mapping
         public OrderProfile()
         {
             CreateMap<AddressDTO, OrderAddress>();
+            CreateMap<DeliveryMethod, DeliveryMethodDTO>();
+
             CreateMap<Order, OrderToReturnDTO>()
                 .ForMember(dest => dest.DeliveryMethod,option => option.MapFrom(src=>src.DeliveryMethod.ShortName));
 

@@ -1,9 +1,9 @@
 ﻿namespace ExoticsCarsStoreServerSide.Shared.DTOS.OrderDTOS
 {
-    public class OrderDTO
+    public record OrderDTO
     {
-        public string BasketId { get; set; } = default!;
-        public int DeliveryMethodId { get; set; }
-        public AddressDTO Address { get; set; } = default!;
+        public string BasketId { get; init; } = default!;
+        public int DeliveryMethodId { get; init; }
+        public AddressDTO Address { get; init; } = default!;
     }
 }

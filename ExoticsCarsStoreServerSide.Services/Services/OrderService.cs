@@ -53,7 +53,14 @@ namespace ExoticsCarsStoreServerSide.Services.Services
 
             return _mapper.Map<OrderToReturnDTO>(order);
         }
-
+     
+        public async Task<ErrorToReturnValue<IEnumerable<DeliveryMethodDTO>>> GetAllDeliveryMethodAsync()
+        {
+            var deliveryMethods = await _unitOfWork.GetRepository<DeliveryMethod, int>().GetAllAsync()
+               ?? throw new DeliveryMethodStringNotFoundException("Not Delivery Method Found");
+            var deliveryMethodsDto = _mapper.Map<IEnumerable<DeliveryMethodDTO>>(deliveryMethods);
+            return ErrorToReturnValue<IEnumerable<DeliveryMethodDTO>>.Ok(deliveryMethodsDto);
+        }
 
 
         private static OrderItem CreateOrderItem(BasketItem item, Product product)
@@ -70,5 +77,6 @@ namespace ExoticsCarsStoreServerSide.Services.Services
                 Quantity = item.Quantity
             };
         }
+
     }
 }

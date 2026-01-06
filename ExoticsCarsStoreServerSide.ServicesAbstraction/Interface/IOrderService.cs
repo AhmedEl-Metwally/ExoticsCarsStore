@@ -6,5 +6,6 @@ namespace ExoticsCarsStoreServerSide.ServicesAbstraction.Interface
     public interface IOrderService
     {
         Task<ErrorToReturnValue<OrderToReturnDTO>> CreateOrderAsync(OrderDTO orderDTO, string Email);
+        Task<ErrorToReturnValue<IEnumerable<DeliveryMethodDTO>>> GetAllDeliveryMethodAsync();
     }
 }

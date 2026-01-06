@@ -1,16 +1,16 @@
 ﻿namespace ExoticsCarsStoreServerSide.Shared.DTOS.OrderDTOS
 {
-    public class OrderToReturnDTO
+    public record OrderToReturnDTO
     {
-        public Guid Id { get; set; }
-        public string UserEmail { get; set; } = string.Empty;
-        public ICollection<OrderItemDTO> Items { get; set; } = [];
-        public AddressDTO Address { get; set; } = default!;
-        public string DeliveryMethod { get; set; } = string.Empty;
-        public string OrderStatus { get; set; } = string.Empty;
-        public DateTimeOffset OrderDate { get; set; }
-        public decimal SubTotal { get; set; }
-        public decimal Total { get; set; }
-       // public decimal DeliveryCost { get; set; }
+        public Guid Id { get; init; }
+        public string UserEmail { get; init; } = string.Empty;
+        public ICollection<OrderItemDTO> Items { get; init; } = [];
+        public AddressDTO Address { get; init; } = default!;
+        public string DeliveryMethod { get; init; } = string.Empty;
+        public string OrderStatus { get; init; } = string.Empty;
+        public DateTimeOffset OrderDate { get; init; }
+        public decimal SubTotal { get; init; }
+        public decimal Total { get; init; }
+        // public decimal DeliveryCost { get; set; }
     }
 }
