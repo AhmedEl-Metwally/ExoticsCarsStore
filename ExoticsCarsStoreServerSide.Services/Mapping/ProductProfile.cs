@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ExoticsCarsStoreServerSide.Domain.Models.ProductModule;
+using ExoticsCarsStoreServerSide.Services.Resolvers;
 using ExoticsCarsStoreServerSide.Shared.DTOS.ProductDTOS;
 
 namespace ExoticsCarsStoreServerSide.Services.Mapping

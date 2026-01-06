@@ -3,7 +3,7 @@ using ExoticsCarsStoreServerSide.Domain.Models.ProductModule;
 using ExoticsCarsStoreServerSide.Shared.DTOS.ProductDTOS;
 using Microsoft.Extensions.Configuration;
 
-namespace ExoticsCarsStoreServerSide.Services.Mapping
+namespace ExoticsCarsStoreServerSide.Services.Resolvers
 {
     public class ProductPictureUrlResolver(IConfiguration _configuration) : IValueResolver<Product, ProductDTO, string>
     {
@@ -20,8 +20,6 @@ namespace ExoticsCarsStoreServerSide.Services.Mapping
 
             var picUrl = $"{baseUrl}{source.PictureUrl}";
             return picUrl;
-
-
         }
     }
 }

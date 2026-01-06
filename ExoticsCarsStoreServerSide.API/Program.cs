@@ -10,6 +10,7 @@ using ExoticsCarsStoreServerSide.Persistence.IdentityData.DataSeed;
 using ExoticsCarsStoreServerSide.Persistence.IdentityData.DbContext;
 using ExoticsCarsStoreServerSide.Persistence.Repository;
 using ExoticsCarsStoreServerSide.Services.Mapping;
+using ExoticsCarsStoreServerSide.Services.Resolvers;
 using ExoticsCarsStoreServerSide.Services.Services;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,6 +57,7 @@ builder.Services.AddAutoMapper(Mapping =>
 {
     Mapping.AddProfile(new ProductProfile());
     Mapping.AddProfile(new BasketProfile());
+    Mapping.AddProfile(new OrderProfile());
 });
 builder.Services.AddTransient<ProductPictureUrlResolver>();
 
@@ -66,6 +68,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<ICacheService, CacheService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddKeyedScoped<IDataInitializer, DataInitializer>("Default");
 builder.Services.AddKeyedScoped<IDataInitializer, IdentityDataInitializer>("Identity");
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExoticsCarsStoreIdentityDbContext>();
@@ -83,8 +86,8 @@ builder.Services.AddAuthentication(Config =>
           ValidateIssuer = true,
           ValidateAudience = true,
           ValidateLifetime = true,
-          ValidIssuer =builder.Configuration["JwtOptions:Issuer"],
-          ValidAudience =builder.Configuration["JwtOptions:Audience"],
+          ValidIssuer = builder.Configuration["JwtOptions:Issuer"],
+          ValidAudience = builder.Configuration["JwtOptions:Audience"],
           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtOptions:SecretKey"]))
       };
   });
