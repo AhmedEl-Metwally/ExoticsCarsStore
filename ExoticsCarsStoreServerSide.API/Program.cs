@@ -60,6 +60,7 @@ builder.Services.AddAutoMapper(Mapping =>
     Mapping.AddProfile(new OrderProfile());
 });
 builder.Services.AddTransient<ProductPictureUrlResolver>();
+builder.Services.AddTransient<OrderItemPictureUrlResolver>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();

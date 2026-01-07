@@ -11,6 +11,6 @@
         public DateTimeOffset OrderDate { get; init; }
         public decimal SubTotal { get; init; }
         public decimal Total { get; init; }
-        // public decimal DeliveryCost { get; set; }
+         public decimal DeliveryCost { get; init; }
     }
 }

@@ -69,12 +69,12 @@ namespace ExoticsCarsStoreServerSide.Services.Services
             return ErrorToReturnValue<IEnumerable<OrderToReturnDTO>>.Ok(ordersDto);
         }
 
-        public Task<ErrorToReturnValue<OrderToReturnDTO>> GetOrderByIdAsync(Guid orderId)
+        public async Task<ErrorToReturnValue<OrderToReturnDTO>> GetOrderByIdAsync(Guid orderId)
         {
-            var spec = new OrderSpecifications(orderId );
-            var order = _unitOfWork.GetRepository<Order, Guid>() ?? throw new OrderByIdNotFoundException(orderId);
-            var orderDto = _mapper.Map<OrderToReturnDTO>(order);
-            return Task.FromResult(ErrorToReturnValue<OrderToReturnDTO>.Ok(orderDto));
+            var spec = new OrderSpecifications(orderId);
+            var order = await _unitOfWork.GetRepository<Order, Guid>().GetByIdAsync(spec) ?? throw new OrderByIdNotFoundException(orderId);
+            var orderDto = _mapper.Map< OrderToReturnDTO>(order);
+            return ErrorToReturnValue<OrderToReturnDTO>.Ok(orderDto);
         }
 
         private static OrderItem CreateOrderItem(BasketItem item, Product product)

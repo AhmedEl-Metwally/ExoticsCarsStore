@@ -1,6 +1,7 @@
 ﻿using ExoticsCarsStoreServerSide.Shared.CommonResult;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Security.Claims;
 
 namespace ExoticsCarsStoreServerSide.API.Controllers
 {
@@ -9,7 +10,6 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
     public class ApiBaseController : ControllerBase
     {
         //Handle Result Without Value
-
         protected IActionResult HandleResult(ErrorToReturn returnValue)
         {
             if (returnValue.IsSuccess)
@@ -17,8 +17,6 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
             else
                 return HandleProblem(returnValue.Errors);
         }
-
-
 
         //Handle Result With Value
         protected ActionResult<TValue> HandleResult<TValue>(ErrorToReturnValue<TValue> returnValue)
@@ -28,6 +26,9 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
             else
                 return HandleProblem(returnValue.Errors);
         }
+
+        // Handle Email from Token
+        protected string GetEmailFromToken() => User.FindFirstValue(ClaimTypes.Email)!;
 
         // Helper methods 
         private ActionResult HandleProblem(IReadOnlyList<ValidationErrorToReturn> errors)

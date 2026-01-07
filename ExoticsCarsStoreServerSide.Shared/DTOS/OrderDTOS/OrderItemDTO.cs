@@ -2,7 +2,7 @@
 {
     public record OrderItemDTO
     {
-        //public int ProductId { get; set; }
+        public int ProductId { get; set; }
         public string ProductName { get; init; } = string.Empty;
         public string PictureUrl { get; init; } = string.Empty;
         public decimal Price { get; init; }

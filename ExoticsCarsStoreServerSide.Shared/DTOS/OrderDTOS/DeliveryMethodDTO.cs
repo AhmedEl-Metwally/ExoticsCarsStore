@@ -6,7 +6,7 @@
         public string ShortName { get; init; } = string.Empty;
         public string Description { get; init; } = string.Empty;
         public string DeliveryTime { get; init; } = string.Empty;
-        public decimal Cost { get; init; }
+        public decimal Price { get; init; }
 
     }
 }
