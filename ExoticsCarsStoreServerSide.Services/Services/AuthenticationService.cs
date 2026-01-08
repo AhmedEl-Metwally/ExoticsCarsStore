@@ -1,8 +1,11 @@
-﻿using ExoticsCarsStoreServerSide.Domain.Models.IdentityModule;
+﻿using AutoMapper;
+using ExoticsCarsStoreServerSide.Domain.Models.IdentityModule;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using ExoticsCarsStoreServerSide.Shared.CommonResult;
 using ExoticsCarsStoreServerSide.Shared.DTOS.IdentityDTOS;
+using ExoticsCarsStoreServerSide.Shared.DTOS.OrderDTOS;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +14,7 @@ using System.Text;
 
 namespace ExoticsCarsStoreServerSide.Services.Services
 {
-    public class AuthenticationService(UserManager<ApplicationUser> _userManager, IConfiguration _configuration) : IAuthenticationService
+    public class AuthenticationService(UserManager<ApplicationUser> _userManager, IConfiguration _configuration, IMapper _mapper) : IAuthenticationService
     {
         public async Task<ErrorToReturnValue<UserDTO>> LoginAsync(LoginDTO loginDTO)
         {
@@ -63,7 +66,40 @@ namespace ExoticsCarsStoreServerSide.Services.Services
             return new UserDTO { Email = User.Email!, DisplayName = User.DisplayName, Token = Token };
         }
 
+        public async Task<ErrorToReturnValue<AddressDTO>> GetAddressAsync(string email)
+        {
+            var User = await _userManager.Users.Include(U => U.Address).FirstOrDefaultAsync(U => U.Email == email);
+            if (User is null)
+                return ValidationErrorToReturn.NotFound("User.NotFound", $"User with email {email} not found");
+            if (User.Address is null)
+                return ValidationErrorToReturn.NotFound("Address.NotFound", $"Address for user with email {email} not found");
+            return _mapper.Map<AddressDTO>(User.Address);
+        }
 
+        public async Task<ErrorToReturnValue<AddressDTO>> UpdateUserAddressAsync(string email, AddressDTO addressDTO)
+        {
+            var User = await _userManager.Users.Include(U => U.Address).FirstOrDefaultAsync(U => U.Email == email);
+            if (User is null)
+                return ValidationErrorToReturn.NotFound("User.NotFound", $"User with email {email} not found");
+
+            if (User.Address is not null)
+            {
+                User.Address.FirstName = addressDTO.FirstName;
+                User.Address.LastName = addressDTO.LastName;
+                User.Address.City = addressDTO.City;
+                User.Address.Street = addressDTO.Street;
+                User.Address.Country = addressDTO.Country;
+            }
+            else
+                User.Address = _mapper.Map<Address>(addressDTO);
+
+            await _userManager.UpdateAsync(User);
+            return _mapper.Map<AddressDTO>(User.Address);
+        }
+
+
+
+        // Helper Method to Create JWT Token
         private async Task<string> CreateTokenAsync(ApplicationUser user)
         {
             var Claims = new List<Claim>()
@@ -89,9 +125,6 @@ namespace ExoticsCarsStoreServerSide.Services.Services
                  );
 
             return new JwtSecurityTokenHandler().WriteToken(Token);
-
         }
-
-
     }
 }

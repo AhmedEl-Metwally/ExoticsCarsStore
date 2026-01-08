@@ -14,9 +14,7 @@ namespace ExoticsCarsStoreServerSide.Services.Mapping
 
             CreateMap<Order, OrderToReturnDTO>()
                 .ForMember(dest => dest.DeliveryMethod,option => option.MapFrom(src=>src.DeliveryMethod.ShortName))
-                .ForMember(D => D.DeliveryCost, O => O.MapFrom(S => S.DeliveryMethod.Price));
-
-
+                .ForMember(dest => dest.DeliveryCost, option => option.MapFrom(src => src.DeliveryMethod.Price));
 
             CreateMap<OrderItem, OrderItemDTO>()
                 .ForMember(dest => dest.ProductName,option => option.MapFrom(src =>src.Product.ProductName))

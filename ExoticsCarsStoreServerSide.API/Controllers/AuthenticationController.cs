@@ -1,8 +1,8 @@
 ﻿using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using ExoticsCarsStoreServerSide.Shared.DTOS.IdentityDTOS;
+using ExoticsCarsStoreServerSide.Shared.DTOS.OrderDTOS;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace ExoticsCarsStoreServerSide.API.Controllers
 {
@@ -33,8 +33,26 @@ namespace ExoticsCarsStoreServerSide.API.Controllers
         [Authorize]
         public async Task<ActionResult<UserDTO>> GetCurrentUserAsync()
         {
-            var Email = User.FindFirstValue(ClaimTypes.Email)!;
+            var Email = GetEmailFromToken();
             var Result = await _authenticationService.GetUserByEmailAsync(Email);
+            return HandleResult(Result);
+        }
+
+        [Authorize]
+        [HttpGet("Address")]
+        public async Task<ActionResult<AddressDTO>> GetAddressAsync()
+        {
+            var Email = GetEmailFromToken();
+            var Result = await _authenticationService.GetAddressAsync(Email);
+            return HandleResult(Result);
+        }
+
+        [Authorize]
+        [HttpPut("Address")]
+        public async Task<ActionResult<AddressDTO>> UpdateUserAddressAsync(AddressDTO addressDTO)
+        {
+            var Email = GetEmailFromToken();
+            var Result = await _authenticationService.UpdateUserAddressAsync(Email, addressDTO);
             return HandleResult(Result);
         }
     }

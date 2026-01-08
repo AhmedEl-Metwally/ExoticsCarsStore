@@ -58,6 +58,7 @@ builder.Services.AddAutoMapper(Mapping =>
     Mapping.AddProfile(new ProductProfile());
     Mapping.AddProfile(new BasketProfile());
     Mapping.AddProfile(new OrderProfile());
+    Mapping.AddProfile(new AuthenticationProfile());
 });
 builder.Services.AddTransient<ProductPictureUrlResolver>();
 builder.Services.AddTransient<OrderItemPictureUrlResolver>();
