@@ -9,6 +9,7 @@
         public ICollection<OrderItem> Items { get; set; } = [];
         public decimal SubTotal { get; set; }
         public decimal GetTotal() => SubTotal + DeliveryMethod.Price;
+        public string PaymentIntentId { get; set; } = string.Empty;
 
         public DeliveryMethod DeliveryMethod { get; set; } = default!;
         public int DeliveryMethodId { get; set; }

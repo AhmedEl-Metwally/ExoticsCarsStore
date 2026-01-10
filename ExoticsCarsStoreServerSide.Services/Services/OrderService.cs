@@ -6,6 +6,7 @@ using ExoticsCarsStoreServerSide.Domain.Models.OrderModule;
 using ExoticsCarsStoreServerSide.Domain.Models.ProductModule;
 using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Services.Specifications.OrderWithSpecifications;
+using ExoticsCarsStoreServerSide.Services.Specifications.PaymentIntentWithSpecifications;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
 using ExoticsCarsStoreServerSide.Shared.CommonResult;
 using ExoticsCarsStoreServerSide.Shared.DTOS.OrderDTOS;
@@ -20,6 +21,10 @@ namespace ExoticsCarsStoreServerSide.Services.Services
             var Basket = await _basketRepository.GetBasketAsync(orderDTO.BasketId) ?? throw new BasketNotFoundException(orderDTO.BasketId);
             //if (Basket is null)
             //    return ValidationErrorToReturn.NotFound("Basket.NotFound", $"The basket with Id:{orderDTO.BasketId} is Not found");
+            //if(Basket.PaymentIntentId is null)
+            //    return ValidationErrorToReturn.Failure("Basket.PaymentIntentId", "The basket PaymentIntentId is null");
+
+            ArgumentNullException.ThrowIfNull(Basket.PaymentIntentId);
 
             List<OrderItem> OrderItems = new List<OrderItem>();
             foreach (var item in Basket.Items)
@@ -37,10 +42,16 @@ namespace ExoticsCarsStoreServerSide.Services.Services
 
             var SubTotal = OrderItems.Sum(item => item.Price * item.Quantity);
 
+            var OrderRepo = _unitOfWork.GetRepository<Order, Guid>();
+            var PaymentSpecification = new PaymentIntentSpecifications(Basket.PaymentIntentId);
+            var ExistingOrder = await OrderRepo.GetByIdAsync(PaymentSpecification);
+            if (ExistingOrder is not null) OrderRepo.Remove(ExistingOrder);
+
             var order = new Order()
             {
                 Address = OrderAddress,
                 DeliveryMethod = DeliveryMethod,
+                PaymentIntentId = Basket.PaymentIntentId!,
                 Items = OrderItems,
                 SubTotal = SubTotal,
                 UserEmail = Email

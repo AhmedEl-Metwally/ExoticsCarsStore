@@ -7,5 +7,6 @@
         public IOrderService OrderService { get; }
         public ICacheService CacheService { get; }
         public IAuthenticationService AuthenticationService { get; }
+        public IPaymentService PaymentService { get; }
     }
 }

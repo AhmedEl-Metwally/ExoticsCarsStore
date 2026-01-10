@@ -22,6 +22,7 @@ namespace ExoticsCarsStoreServerSide.Services.Services
         private readonly Lazy<IOrderService> _lazyOrderService = new Lazy<IOrderService>(() => new OrderService(_mapper, _basketRepository, _unitOfWork));
         private readonly Lazy<ICacheService> _lazyCacheService = new Lazy<ICacheService>(() => new CacheService(_cacheRepository));
         private readonly Lazy<IAuthenticationService> _lazyAuthenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(_userManager, _configuration,_mapper));
+        private readonly Lazy<IPaymentService> _lazyPaymentService = new Lazy<IPaymentService>(() => new PaymentService(_basketRepository,_unitOfWork, _configuration, _mapper));
 
         public IProductService ProductService => _lazyProductService.Value;
 
@@ -32,5 +33,7 @@ namespace ExoticsCarsStoreServerSide.Services.Services
         public ICacheService CacheService => _lazyCacheService.Value;
 
         public IAuthenticationService AuthenticationService => _lazyAuthenticationService.Value;
+
+        public IPaymentService PaymentService => _lazyPaymentService.Value;
     }
 }
