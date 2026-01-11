@@ -27,6 +27,10 @@ namespace ExoticsCarsStoreServerSide.API.Extensions
             Services.AddTransient<ProductPictureUrlResolver>();
             Services.AddTransient<OrderItemPictureUrlResolver>();
 
+            Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            Services.AddScoped<IBasketRepository, BasketRepository>();
+            Services.AddScoped<ICacheRepository, CacheRepository>();
+
             Services.AddScoped<IProductService, ProductService>();
             Services.AddScoped<IServiceManager, ServiceManager>();
             Services.AddScoped<IBasketService, BasketService>();

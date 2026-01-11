@@ -31,9 +31,7 @@ namespace ExoticsCarsStoreServerSide.API.Extensions
 
             Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExoticsCarsStoreIdentityDbContext>();
 
-            Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            Services.AddScoped<IBasketRepository, BasketRepository>();
-            Services.AddScoped<ICacheRepository, CacheRepository>();
+         
 
             return Services;
         }
