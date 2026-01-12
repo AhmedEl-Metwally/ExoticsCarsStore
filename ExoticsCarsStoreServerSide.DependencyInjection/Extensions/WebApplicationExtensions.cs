@@ -1,10 +1,12 @@
-﻿using ExoticsCarsStoreServerSide.API.Factories;
+﻿using ExoticsCarsStoreServerSide.Shared.Factories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace ExoticsCarsStoreServerSide.API.Extensions
+namespace ExoticsCarsStoreServerSide.DependencyInjection.Extensions
 {
     public static class WebApplicationExtensions
     {

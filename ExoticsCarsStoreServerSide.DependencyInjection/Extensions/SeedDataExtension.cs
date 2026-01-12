@@ -1,7 +1,9 @@
 ﻿using ExoticsCarsStoreServerSide.Domain.Specifications;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using ExoticsCarsStoreServerSide.Persistence.IdentityData.DbContext;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ExoticsCarsStoreServerSide.API.Extensions
 {

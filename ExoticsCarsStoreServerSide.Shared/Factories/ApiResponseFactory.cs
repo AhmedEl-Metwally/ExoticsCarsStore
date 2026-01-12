@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace ExoticsCarsStoreServerSide.API.Factories
+namespace ExoticsCarsStoreServerSide.Shared.Factories
 {
     public class ApiResponseFactory
     {
@@ -15,9 +17,12 @@ namespace ExoticsCarsStoreServerSide.API.Factories
                 Title = "One or more validation errors occurred.",
                 Detail = "See the errors property for more details.",
                 Status = StatusCodes.Status400BadRequest,
-                Extensions = { { "errors", Errors } }
+                //Extensions = { { "errors", Errors } }
             };
             return new BadRequestObjectResult(Response);
         }
     }
 }
+
+
+

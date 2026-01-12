@@ -1,4 +1,7 @@
-﻿namespace ExoticsCarsStoreServerSide.API.Extensions
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
+
+namespace ExoticsCarsStoreServerSide.DependencyInjection.Extensions
 {
     public static class WebApplicationMiddlewareExtensions
     {

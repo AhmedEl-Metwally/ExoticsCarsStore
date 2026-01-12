@@ -7,8 +7,9 @@ using ExoticsCarsStoreServerSide.Services.Mapping;
 using ExoticsCarsStoreServerSide.Services.Resolvers;
 using ExoticsCarsStoreServerSide.Services.Services;
 using ExoticsCarsStoreServerSide.ServicesAbstraction.Interface;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace ExoticsCarsStoreServerSide.API.Extensions
+namespace ExoticsCarsStoreServerSide.DependencyInjection.Extensions
 {
     public static class CoreServicesExtensions
     {

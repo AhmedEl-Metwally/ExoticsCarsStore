@@ -1,5 +1,6 @@
 using ExoticsCarsStoreServerSide.API.CustomMiddleWares;
 using ExoticsCarsStoreServerSide.API.Extensions;
+using ExoticsCarsStoreServerSide.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

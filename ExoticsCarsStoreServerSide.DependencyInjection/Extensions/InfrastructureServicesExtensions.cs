@@ -1,14 +1,13 @@
-﻿using ExoticsCarsStoreServerSide.Domain.Contracts;
-using ExoticsCarsStoreServerSide.Domain.Models.IdentityModule;
-using ExoticsCarsStoreServerSide.Domain.Specifications;
+﻿using ExoticsCarsStoreServerSide.Domain.Models.IdentityModule;
 using ExoticsCarsStoreServerSide.Persistence.Data.Context;
 using ExoticsCarsStoreServerSide.Persistence.IdentityData.DbContext;
-using ExoticsCarsStoreServerSide.Persistence.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace ExoticsCarsStoreServerSide.API.Extensions
+namespace ExoticsCarsStoreServerSide.DependencyInjection.Extensions
 {
     public static class InfrastructureServicesExtensions
     {
@@ -31,7 +30,7 @@ namespace ExoticsCarsStoreServerSide.API.Extensions
 
             Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExoticsCarsStoreIdentityDbContext>();
 
-         
+
 
             return Services;
         }
