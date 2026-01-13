@@ -27,5 +27,58 @@ namespace AdminDashboard.Controllers
             }
             return View(nameof(Index), await _roleManager.Roles.ToListAsync());
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role is null)
+            {
+                ModelState.AddModelError("Id", "No role exists with this Id.");
+                return RedirectToAction(nameof(Index));
+            }
+
+            UpdateRoleViewModel updateRoleViewModel = new UpdateRoleViewModel
+            {
+                Id = id,
+                Name = role.Name!
+            };
+            return View(updateRoleViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UpdateRoleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var roleExists = await _roleManager.RoleExistsAsync(model.Name);
+                if (!roleExists)
+                {
+                    var role = await _roleManager.FindByIdAsync(model.Id);
+                    if (role is not null)
+                    {
+                        role.Name = model.Name;
+                        await _roleManager.UpdateAsync(role);
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("Name", "Role already exists");
+                    return View(model);
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role is not null)
+                await _roleManager.DeleteAsync(role);
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }
