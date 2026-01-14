@@ -50,6 +50,7 @@ namespace AdminDashboard.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserRoleViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.UserId);
