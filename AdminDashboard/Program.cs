@@ -1,4 +1,7 @@
+using AdminDashboard.Helpers;
 using ExoticsCarsStoreServerSide.DependencyInjection.Extensions;
+using ExoticsCarsStoreServerSide.Domain.Specifications;
+using ExoticsCarsStoreServerSide.Persistence.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddAutoMapper(Mapping =>
+{
+    Mapping.AddProfile(new MapsProfile());
+});
 
 var app = builder.Build();
 

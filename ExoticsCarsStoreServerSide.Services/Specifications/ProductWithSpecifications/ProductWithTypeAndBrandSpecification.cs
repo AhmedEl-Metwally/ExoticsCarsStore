@@ -3,10 +3,10 @@ using ExoticsCarsStoreServerSide.Shared;
 
 namespace ExoticsCarsStoreServerSide.Services.Specifications.ProductWithSpecifications
 {
-    public class ProductWithTypeAndBrandSpecification : BaseSpecifications<Product,int>
+    public class ProductWithTypeAndBrandSpecification : BaseSpecifications<Product, int>
     {
         // GetAllProduct
-        public ProductWithTypeAndBrandSpecification(ProductQueryParams queryParams) : base(ProductSpecificationsHelper.GetProductCriteria(queryParams))
+        public ProductWithTypeAndBrandSpecification(ProductQueryParams queryParams, bool forDashboard = false) : base(ProductSpecificationsHelper.GetProductCriteria(queryParams))
         {
             AddInclude(P => P.ProductBrand);
             AddInclude(P => P.ProductType);
@@ -28,7 +28,8 @@ namespace ExoticsCarsStoreServerSide.Services.Specifications.ProductWithSpecific
                 default:
                     break;
             }
-            ApplyPagination(queryParams.pageSize, queryParams.pageIndex);
+            if (!forDashboard)
+                ApplyPagination(queryParams.pageSize, queryParams.pageIndex);
         }
 
         // GetProductById
