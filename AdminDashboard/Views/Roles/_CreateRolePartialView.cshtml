@@ -5,21 +5,18 @@
 
 <h1>Create Role</h1>
 
-<form method="post" asp-action="Create">
-    <div class="input-group mb-2">
-        <input asp-for="@Model.Name" class="form-control me-2 rounded-2" placeholder="Enter the role name" />
-
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-success"> Create </button>
+<form method="post" asp-action="Create" class="mx-auto" style="max-width: 500px;">
+    <div class="input-group mb-2 shadow-sm">
+        <input asp-for="@Model.Name" class="form-control" placeholder="Create Role" />
+        <div class="input-group-append ms-2">
+            <button type="submit" class="btn btn-primary">Add New Role</button>
         </div>
     </div>
-
-
-    <span asp-validation-for="@Model.Name" class="text-danger"></span>
-
+    <span asp-validation-for="@Model.Name" class="text-danger small"></span>
 </form>
-
 
 @section Secripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+
