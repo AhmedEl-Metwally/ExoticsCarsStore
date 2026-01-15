@@ -1,0 +1,11 @@
+﻿@model ProductBrand
+
+<form method="post" asp-action="Create" class="mx-auto" style="max-width: 500px;">
+    <div class="input-group mb-2 shadow-sm">
+        <input asp-for="Name" class="form-control" placeholder="Brand name..." />
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Add new brand</button>
+        </div>
+    </div>
+    <span asp-validation-for="Name" class="text-danger small"></span>
+</form>

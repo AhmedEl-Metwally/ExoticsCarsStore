@@ -94,7 +94,7 @@ namespace AdminDashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, ProductViewModel model) 
+        public async Task<IActionResult> Delete(int id, ProductViewModel model)
         {
             if (id != model.Id)
                 return BadRequest();
@@ -113,7 +113,7 @@ namespace AdminDashboard.Controllers
             }
             catch (Exception)
             {
-                return View(model);;
+                return View(model); ;
             }
         }
 
